@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+  
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read Text File</title>
+</head>
+    <style>
+        a{
+            text-decoration:none;
+        }
+        a:hover{
+            text-decoration:underline;
+        }
+        .btn{
+            display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+        }
+        .Sl_to_txt{
+    background-image: -webkit-linear-gradient(top,#5cb85c 0,#419641 100%);
+    background-image: -o-linear-gradient(top,#5cb85c 0,#419641 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#5cb85c),to(#419641));
+    background-image: linear-gradient(to bottom,#5cb85c 0,#419641 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5cb85c', endColorstr='#ff419641', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    background-repeat: repeat-x;
+    border-color: #3e8f3e;
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+        }
+        body .Sl_to_txt:active{
+            color: #fff;
+    background-color: #449d44;
+    background-image: none;
+    border-color: #398439;}
+
+/*  */
+@media (max-width: 800px) {
+    .right {
+    border-top: solid 2px #707070;
+    margin-top: 20px;
+    }
+    .nfileList{
+        text-align: center;
+    }
+}
+    
+    
+@media (max-width: 800px) {
+    .left, .right {
+        display: block;
+        width: 100%;
+    }
+}
+/*  */
+    
+@media (min-width: 800px) {
+    .left, .right {
+    text-align: left;
+    vertical-align: top;
+    display: inline-block;
+    width: 45%;
+}
+}
+.fileList{
+    text-align: left;
+}
+.btn-primary.disabled, .btn-primary.disabled.active, .btn-primary.disabled.focus, .btn-primary.disabled:active, .btn-primary.disabled:focus, .btn-primary.disabled:hover, .btn-primary[disabled], .btn-primary[disabled].active, .btn-primary[disabled].focus, .btn-primary[disabled]:active, .btn-primary[disabled]:focus, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary, fieldset[disabled] .btn-primary.active, fieldset[disabled] .btn-primary.focus, fieldset[disabled] .btn-primary:active, fieldset[disabled] .btn-primary:focus, fieldset[disabled] .btn-primary:hover {
+    background-color: #265a88;
+    background-image: none;
+}
+.btn-danger.disabled, .btn-danger[disabled], .btn-default.disabled, .btn-default[disabled], .btn-info.disabled, .btn-info[disabled], .btn-primary.disabled, .btn-primary[disabled], .btn-success.disabled, .btn-success[disabled], .btn-warning.disabled, .btn-warning[disabled], fieldset[disabled] .btn-danger, fieldset[disabled] .btn-default, fieldset[disabled] .btn-info, fieldset[disabled] .btn-primary, fieldset[disabled] .btn-success, fieldset[disabled] .btn-warning {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.btn-primary {
+    background-image: -webkit-linear-gradient(top,#337ab7 0,#265a88 100%);
+    background-image: -o-linear-gradient(top,#337ab7 0,#265a88 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#337ab7),to(#265a88));
+    background-image: linear-gradient(to bottom,#337ab7 0,#265a88 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff337ab7', endColorstr='#ff265a88', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    background-repeat: repeat-x;
+    border-color: #245580;
+}
+.btn-danger, .btn-default, .btn-info, .btn-primary, .btn-success, .btn-warning {
+    text-shadow: 0 -1px 0 rgba(0,0,0,.2);
+    -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.15),0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.15),0 1px 1px rgba(0,0,0,.075);
+}
+.btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+.btn-primary {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+}
+.wrapper {
+    width: 100%;
+    margin-bottom: 40px;
+}
+.center {
+    text-align: center;
+}
+
+.credit{
+    display: block;
+    width: 100%;
+    border-top: solid 2px #707070;
+    font-size: 15px;
+    text-align: center;
+}
+    </style>
+  <script src="FileSaver.min.js"></script>
+  <script src="jszip.min.js"></script>
+
+<body>
+    <a href="" onclick="alert('sắp có')">Hướng dẫn sử dụng</a>
+    <div class="wrapper center">
+        <div class="left">
+            <div class="fileInfoArea">
+                <h2>Chọn tệp Sl hoặc Txt</h2>
+    
+                <div>
+                    <label>
+                        Chọn tệp muốn dịch hoặc muốn mã hoá:
+                        <input type="file" name="inputfile"id="inputfile" multiple accept=".sl,.txt">
+                    </label>
+                </div>
+                <br>
+                <div>
+                    <button type="button" class="btn Sl_to_txt" id="restoreEncryptedImages" onclick="Kl7stream()">
+                        <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+                        <span>Chuyển đổi</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="fileList right">
+            <h2 class="nfileList">Danh-sách</h2>
+            <button class="btn btn-primary zipSave" type="button" onclick="NoHope()">
+                <span class="glyphicon glyphicon-download-alt" aria-hidden="true" ></span>
+                <span>Tải tất tả với dạng file Zip</span>
+            </button>
+            <button class="btn btn-default clearFileList" type="button" onclick="Rainbow()">
+                <span class="glyphicon glyphicon-erase" aria-hidden="true"></span>
+                <span>Xoá tất cả</span>
+            </button>
+            <div class="item_txt"></div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+
+    <div class="credit">
+        Được thực bởi : <a href="">DDSA</a> và <a href="">Nô Hộp</a>
+        Mong mọi người đúng góp ý kiến
+    </div>
+    <!-- <h2>Chuyển file .sl thành .txt</h2>
+    <input type="file" name="inputfile"id="inputfile" multiple accept=".sl">
+    <br>
+    <button  class="Sl_to_txts Sl_to_txt">Dịch</button>
+    <hr>
+    <div class="item_txt"></div> -->
+</body>
+<script type="text/javascript">
+    var gea= [];
+    let FEGA=[];
+    let Asegaw = [];
+    let GhJki = 255;
+// /////////////////////////////
+
+
+    const fileSelector = document.getElementById('inputfile');
+        fileSelector.addEventListener('change', (event) => {
+        FEGA = []
+        const fileList = event.target.files;
+        gea= fileList
+        Load_file(0)
+  });
+
+  async function Load_file(i){
+    var I = i
+    if(I<gea.length){
+        var fr= new FileReader();
+        fr.onload=function(){
+            FEGA.push({
+                name:gea[I].name,
+                content:fr.result
+            })
+        }
+       await fr.readAsText(gea[I]);
+       Load_file(I+1)
+    }else return;
+  }
+  
+//  async function Load_file(){
+//     for (let index = 0; index < gea.length; index++) {
+//         var fr= new FileReader();
+//         fr.onload=function(){
+//             FEGA.push({
+//                 name:gea[index].name,
+//                 content:fr.result
+//             })
+//         }
+//         fr.readAsText(gea[index]);
+//     }
+//   }
+ function Kl7stream(){
+     if(FEGA.length == 0) return alert("Không thấy thư mục nào đượC đưa vào")
+    for (let index = 0; index < FEGA.length; index++) {
+        Asegaw.push({
+            name: FleCoffee(FEGA[index].name,"txt"),
+            content: CeSageIs(FEGA[index].content)
+        })
+    }
+    TTGDCT();
+  }
+
+  function Domixi(){
+    for (let index = 0; index < FEGA.length; index++) {
+        Asegaw.push({
+            name: FleCoffee(FEGA[index].name,"sl"),
+            content: Stereopony(FEGA[index].content)
+        })
+    }
+    TTGDCT();
+  }
+////////////////////////////////////////////////
+  function CeSageIs(DaE){
+    var x = DaE.split('')
+    console.log("X:"+x.length)
+    for (var i = 0; i < x.length; i++) {
+			//text_ary[i] = text_ary[i] ^ argTsDecodeKey;
+			x[i] = String.fromCharCode(x[i].charCodeAt(0) ^ GhJki);
+		}
+    return x.join('')
+  }
+
+  function Stereopony(DaE){
+    var x = DaE.split('')
+    console.log("X:"+x.length)
+    for (var i = 0; i < x.length; i++) {
+			//text_ary[i] = text_ary[i] ^ argTsDecodeKey;
+			x[i] = String.fromCharCode(Math.pow(x[i].charCodeAt(0),1/GhJki));
+		}
+    return x.join('')
+  }
+
+  function FleCoffee (E,A){
+      var e = E
+      console.log(e.lastIndexOf("."));
+      if(e.lastIndexOf(".")==-1) return E
+      else{
+        var x = e.lastIndexOf(".");
+        var d = e.slice(x,e.length)
+        e = e.slice(0,x)
+        if(d==".txt") return e+".sl"
+        else if (d==".sl") return e+".txt"
+      }
+      return e
+  }
+
+  function TTGDCT(){
+      var x ="";
+    for (let index = 0; index < Asegaw.length; index++) {
+        x +="<div><p style=\"font-size:20px;display: inline-block;margin:5px\">"+Asegaw[index].name+"&nbsp;&nbsp;&nbsp;&nbsp;</p><a href=\"#\" onclick=\"YthienTV(this)\" data-id=\""+index+"\">Xem</a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onclick=\"Droidxmod(this)\" data-id=\""+index+"\">Tải</a><div/>"
+    }
+    document.getElementsByClassName("item_txt")[0].innerHTML = x
+  }
+  function YthienTV(e){
+    var x = e.getAttribute('data-id');
+    var tab = window.open('about:blank', '_blank');
+    tab.document.write("<pre>"+Asegaw[x].content+"<pre/>"); // where 'html' is a variable containing your HTML
+    tab.document.close(); // to finish loading the page
+  }
+
+function Droidxmod(e){
+    var x = e.getAttribute('data-id');
+    saveAs(new File([Asegaw[x].content], Asegaw[x].name, {type: "text/plain;charset=utf-8"}))
+}
+
+function NoHope(){
+    if(Asegaw.length==0) return alert("Không có gì để tải")
+    console.log("Compress run");
+    var zip = new JSZip();
+    for (let index = 0; index < Asegaw.length; index++) {
+        zip.file(Asegaw[index].name, Asegaw[index].content);
+    }
+        zip.generateAsync({type:"blob"})
+        .then(function(content) {
+            // see FileSaver.js
+            saveAs(content, "Txt(droidxmod).zip");
+        });
+}
+
+function Rainbow(){
+    document.getElementsByClassName("item_txt")[0].innerHTML = "";
+    Asegaw=[]
+}
+        // document.getElementById('inputfile').addEventListener('change', function() {
+              
+        //     var fr=new FileReader();
+        //     fr.onload=function(){
+        //         document.getElementById('output')
+        //                 .textContent=fr.result;
+        //     }
+        //     console.log(this.files)
+            
+        //     fr.readAsText(this.files[1]);
+        //     // fr.readAsText(this.files[1]);
+        //     console.log(fr.readAsText(this.files[1]));
+        // })
+        function compress_file(params) {
+            var zip = new JSZip();
+                zip.file("Hello.txt", "Hello World\n");
+                zip.generateAsync({type:"blob"})
+                .then(function(content) {
+                    // see FileSaver.js
+                    saveAs(content, "Go.zip");
+                });
+        }
+    </script>
+</html>
+
+<!-- 245^255
+10 -->
